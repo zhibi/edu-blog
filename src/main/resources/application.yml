@@ -43,7 +43,13 @@ fast:
       parent: edu.blog
     strategy:
       sync: entity_to_database
+      superMapperClass: tk.mybatis.mapper.common.Mapper
+      superServiceClass: edu.blog.core.base.service.BaseService
+      superServiceImplClass: edu.blog.core.base.service.BaseServiceImpl
+      superControllerClass: edu.blog.core.base.controller.BaseController
     global:
       generatorFile: false
+      outputDir: F://generate//
+      enable: true
     dataSource:
       delOverColumn: true

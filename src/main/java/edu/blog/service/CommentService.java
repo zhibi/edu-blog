@@ -1,15 +1,14 @@
 package edu.blog.service;
 
-import edu.blog.domain.Comment;
 
-import java.util.List;
+import edu.blog.domain.Comment;
+import edu.blog.core.base.service.BaseService;
 
 /**
- * Created by limi on 2017/10/22.
+ *  服务类
+ *
+ * @author 执笔
+ * @date 2019-04-20  17:43:03
  */
-public interface CommentService {
-
-    List<Comment> listCommentByBlogId(Long blogId);
-
-    Comment saveComment(Comment comment);
+public interface CommentService extends BaseService<Comment> {
 }

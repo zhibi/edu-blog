@@ -1,39 +1,14 @@
 package edu.blog.service;
 
-import edu.blog.domain.Blog;
-import edu.blog.vo.BlogQuery;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-import java.util.Map;
+import edu.blog.domain.Blog;
+import edu.blog.core.base.service.BaseService;
 
 /**
- * Created by limi on 2017/10/20.
+ *  服务类
+ *
+ * @author 执笔
+ * @date 2019-04-20  17:43:03
  */
-public interface BlogService {
-
-    Blog getBlog(Long id);
-
-    Blog getAndConvert(Long id);
-
-    Page<Blog> listBlog(Pageable pageable, BlogQuery blog);
-
-    Page<Blog> listBlog(Pageable pageable);
-
-    Page<Blog> listBlog(Long tagId,Pageable pageable);
-
-    Page<Blog> listBlog(String query,Pageable pageable);
-
-    List<Blog> listRecommendBlogTop(Integer size);
-
-    Map<String,List<Blog>> archiveBlog();
-
-    Long countBlog();
-
-    Blog saveBlog(Blog blog);
-
-    Blog updateBlog(Long id,Blog blog);
-
-    void deleteBlog(Long id);
+public interface BlogService extends BaseService<Blog> {
 }
