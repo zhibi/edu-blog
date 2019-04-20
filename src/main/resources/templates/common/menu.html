@@ -3,13 +3,13 @@
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui teal header item">Blog</h2>
-      <a href="#" class="m-item item m-mobile-hide <#if menuAct == '1'>active</#if>"><i
+      <a href="#" class="m-item item m-mobile-hide <#if menuAct! == '1'>active</#if>"><i
                 class="mini home icon"></i>首页</a>
-      <a href="#" class="m-item item m-mobile-hide <#if menuAct == '2'>active</#if>"><i
+      <a href="#" class="m-item item m-mobile-hide <#if menuAct! == '2'>active</#if>"><i
                 class="mini idea icon"></i>分类</a>
-      <a href="#" class="m-item item m-mobile-hide <#if menuAct == '3'>active</#if>"><i
+      <a href="#" class="m-item item m-mobile-hide <#if menuAct! == '3'>active</#if>"><i
                 class="mini tags icon"></i>标签</a>
-      <a href="#" class="m-item item m-mobile-hide <#if menuAct == '4'>active</#if>"><i
+      <a href="#" class="m-item item m-mobile-hide <#if menuAct! == '4'>active</#if>"><i
                 class="mini clone icon"></i>归档</a>
 
       <div class="right m-item item m-mobile-hide">
@@ -19,13 +19,25 @@
             <i onclick="document.forms['search'].submit()" class="search link icon"></i>
           </div>
         </form>
+
+
         <#if sessionUser??>
-          <a href="#" class="m-item item m-mobile-hide <#if menuAct == '5'>active</#if>"><i class="mini user icon"></i>个人中心</a>
-          <a href="/logout" class="m-item item m-mobile-hide"><i class="mini power off icon"></i>退出登录</a>
+          <div class="ui dropdown ">
+            <div class="text">
+              <img class="ui avatar image" src="${sessionUser.icon!}">
+              ${sessionUser.name}
+            </div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <a href="/user/blogList" class="item">我的博客</a>
+              <a href="/logout" class="item"><i class="mini power off icon"></i>注销</a>
+            </div>
+          </div>
         <#else >
           <a href="/login" class="m-item item m-mobile-hide"><i class="mini user icon"></i>登录</a>
           <a href="/register" class="m-item item m-mobile-hide"><i class="mini user icon"></i>注册</a>
         </#if>
+
       </div>
     </div>
   </div>

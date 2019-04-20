@@ -41,6 +41,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         user.setPassword(MD5Utils.code(password));
         user.setCreateTime(LocalDateTime.now());
         user.setName(username);
+        user.setIcon("/images/avatar.png");
         user.setType(User.UserTypeEnum.USER);
         userMapper.insert(user);
         return user;

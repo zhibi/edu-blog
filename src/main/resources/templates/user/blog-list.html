@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+
+<!--导航-->
+<#include "../common/menu.html"/>
+
+<!--中间内容-->
+<div class="m-container-small m-padded-tb-big">
+  <div class="ui container">
+    <div id="table-container">
+      <table class="ui compact teal table">
+        <thead>
+        <tr>
+          <th>标题</th>
+          <th>标签</th>
+          <th>评论数</th>
+          <th>浏览数</th>
+          <th>更新时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list pageInfo.list as item>
+          <tr>
+            <td>${item.title}</td>
+            <td>${item.tag}</td>
+            <td>${item.commentNum}</td>
+            <td>${item.browseNum}</td>
+            <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+            <td>
+              <#--<a href="#" class="ui mini teal basic button">编辑</a>-->
+              <a href="#" onclick="if(confirm('确认要删除吗？')){location.href='/user/delBlog/${item.id}'}"
+                 class="ui mini red basic button">删除</a>
+            </td>
+          </tr>
+        </#list>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th colspan="7">
+            <div class="ui mini pagination menu">
+              <#if pageInfo.hasPreviousPage>
+                <a class="item" href="/user/blogList?pageNum=${pageInfo.prePage}">上一页</a>
+              </#if>
+              <#if pageInfo.hasNextPage>
+                <a class=" item" href="/user/blogList?pageNum=${pageInfo.nextPage}">下一页</a>
+              </#if>
+            </div>
+            <a href="/user/sendBlog" class="ui mini right floated teal basic button">新增</a>
+          </th>
+        </tr>
+        </tfoot>
+      </table>
+
+      <#if errorMessage?? && errorMessage?length gt 0>
+        <div class="ui success message">
+          <i class="close icon"></i>
+          <div class="header">提示：</div>
+          <p>${errorMessage}</p>
+        </div>
+      </#if>
+    </div>
+
+  </div>
+</div>
+
+<#include "../common/footer.html"/>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    //消息提示关闭初始化
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
+
+</script>
+</body>
+</html>

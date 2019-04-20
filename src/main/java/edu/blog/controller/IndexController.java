@@ -48,7 +48,7 @@ public class IndexController extends BaseController {
      * @param model
      * @return
      */
-    @GetMapping("/")
+    @GetMapping({"/","index"})
     public String index(Model model, String title, @RequestParam(defaultValue = "1") int pageNum) {
         // 博客列表
         MybatisCondition condition = new MybatisCondition()
@@ -107,7 +107,7 @@ public class IndexController extends BaseController {
         if (user != null) {
             user.setPassword(null);
             session.setAttribute(Constant.SESSION_USER, user);
-            return "index";
+            return redirect("/index");
         } else {
             attributes.addFlashAttribute(Constant.ERROR_MESSAGE, "用户名或密码错误");
             return redirect("/login");
@@ -164,27 +164,5 @@ public class IndexController extends BaseController {
         session.removeAttribute(Constant.SESSION_USER);
         return "redirect:/";
     }
-
-/*
-    @PostMapping("/search")
-    public String search(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
-                         @RequestParam String query, Model model) {
-        model.addAttribute("page", blogService.listBlog("%" + query + "%", pageable));
-        model.addAttribute("query", query);
-        return "search";
-    }*/
-
-/*    @GetMapping("/blog/{id}")
-    public String blog(@PathVariable Long id, Model model) {
-        model.addAttribute("blog", blogService.getAndConvert(id));
-        return "blog";
-    }*/
-
-/*    @GetMapping("/footer/newblog")
-    public String newblogs(Model model) {
-        model.addAttribute("newblogs", blogService.listRecommendBlogTop(3));
-        return "_fragments :: newblogList";
-    }*/
-
 }
 

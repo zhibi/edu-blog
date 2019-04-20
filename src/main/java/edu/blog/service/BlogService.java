@@ -22,4 +22,9 @@ public interface BlogService extends BaseService<Blog> {
      */
     PageInfo<BlogDTO> selectDtoPage(MybatisCondition condition);
 
+    /**
+     * 发布博客
+     * @param blog
+     */
+    void send(Blog blog);
 }

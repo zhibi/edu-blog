@@ -6,11 +6,13 @@ import edu.blog.core.util.ParamUtils;
 import edu.blog.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -36,9 +38,16 @@ public abstract class BaseController implements Constant {
      * @return
      */
     protected String saveFile(MultipartFile file) {
+        String rootPath = null;
+        try {
+            rootPath = ResourceUtils.getURL("classpath:").getPath() + "/public/upload/";
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         String back     = file.getOriginalFilename().substring(("." + file.getOriginalFilename()).lastIndexOf("."));
         String fileName = UUID.randomUUID() + "." + back;
-        File   newFile  = new File(request.getServletContext().getRealPath("/data/") + "/" + fileName);
+        File   newFile  = new File(rootPath + "/" + fileName);
         newFile.getParentFile().mkdirs();
         try {
             newFile.createNewFile();
