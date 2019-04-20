@@ -4,6 +4,7 @@ package edu.blog.core.base.controller;
 import edu.blog.core.context.Constant;
 import edu.blog.core.util.ParamUtils;
 import edu.blog.domain.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
@@ -20,6 +21,7 @@ import java.util.UUID;
  * @author 执笔
  * @date 2019/4/9 21:48
  */
+@Slf4j
 public abstract class BaseController implements Constant {
 
     @Autowired
@@ -55,8 +57,8 @@ public abstract class BaseController implements Constant {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("上传文件: " + newFile.getAbsolutePath());
-        return "/data/" + fileName;
+        log.info("上传文件: " + newFile.getAbsolutePath());
+        return "/upload/" + fileName;
     }
 
     /**

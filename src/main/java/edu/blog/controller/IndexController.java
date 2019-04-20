@@ -59,17 +59,17 @@ public class IndexController extends BaseController {
         // 标签
         condition = new MybatisCondition()
                 .order("blog_num", false)
-                .page(pageNum, 12);
+                .page(1, 12);
         List<Tag> tagList = tagService.selectPage(condition).getList();
         // 社团
         condition = new MybatisCondition()
                 .order("user_num", false)
-                .page(pageNum, 6);
+                .page(1, 6);
         List<League> leagueList = leagueService.selectPage(condition).getList();
         // 推荐博客
         condition = new MybatisCondition()
                 .order("browse_num", false)
-                .page(pageNum, 10);
+                .page(1, 10);
         List<Blog> blogList = blogService.selectPage(condition).getList();
 
         model.addAttribute("pageInfo", blogPageInfo);
