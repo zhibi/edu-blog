@@ -27,4 +27,10 @@ public interface BlogService extends BaseService<Blog> {
      * @param blog
      */
     void send(Blog blog);
+
+    /**
+     * 删除博客
+     * @param id
+     */
+    void delete(Integer id);
 }

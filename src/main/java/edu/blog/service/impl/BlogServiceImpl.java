@@ -47,4 +47,17 @@ public class BlogServiceImpl extends BaseServiceImpl<BlogMapper, Blog> implement
             tagMapper.updateByPrimaryKeySelective(tag);
         }
     }
+
+    @Override
+    public void delete(Integer id) {
+        Blog blog = blogMapper.selectByPrimaryKey(id);
+        if (null != blog) {
+            Tag tag = tagMapper.selectOne(new Tag().setName(blog.getTag()));
+            if (tag != null) {
+                tag.setBlogNum(tag.getBlogNum() - 1);
+                tagMapper.updateByPrimaryKeySelective(tag);
+            }
+        }
+        blogMapper.deleteByPrimaryKey(id);
+    }
 }

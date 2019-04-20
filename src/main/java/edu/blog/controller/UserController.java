@@ -72,7 +72,7 @@ public class UserController extends BaseController {
      */
     @GetMapping("delBlog/{id}")
     public String delBlog(@PathVariable Integer id, RedirectAttributes model) {
-        blogMapper.deleteByPrimaryKey(id);
+        blogService.delete(id);
         model.addFlashAttribute(ERROR_MESSAGE, "删除成功");
         return refresh();
     }
