@@ -1,19 +1,18 @@
 package edu.blog.config;
 
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.SimpleDate;
-import freemarker.template.TemplateModel;
-import freemarker.template.TemplateModelException;
+import freemarker.template.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 
-import javax.annotation.Resource;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+import static freemarker.template.Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS;
 
 /**
  * @author 执笔
@@ -24,17 +23,21 @@ public class FreemarkerConfig {
 
     /**
      * 配置freemarker 支持 java8 时间
+     *
      * @param configurer
      */
-    @Resource
-    void configureFreemarkerConfigurer(FreeMarkerConfig configurer) {
-        configurer.getConfiguration().setObjectWrapper(new CustomObjectWrapper());
+    @Autowired
+    private void configureFreemarkerConfigurer(FreeMarkerConfig configurer) {
+        configurer.getConfiguration().setObjectWrapper(new CustomObjectWrapper(DEFAULT_INCOMPATIBLE_IMPROVEMENTS));
     }
 
     /**
      * 自定义转换
      */
-    private static class CustomObjectWrapper extends DefaultObjectWrapper {
+    private class CustomObjectWrapper extends DefaultObjectWrapper {
+        public CustomObjectWrapper(Version incompatibleImprovements) {
+            super(incompatibleImprovements);
+        }
         @Override
         public TemplateModel wrap(Object obj) throws TemplateModelException {
             if (obj instanceof LocalDateTime) {
