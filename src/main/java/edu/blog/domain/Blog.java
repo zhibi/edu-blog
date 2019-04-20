@@ -3,11 +3,7 @@ package edu.blog.domain;
 import edu.blog.core.base.dto.BaseDomain;
 import lombok.Data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 /**
  * @author 执笔
@@ -30,7 +26,7 @@ public class Blog extends BaseDomain {
     /**
      * 标签
      */
-    private String flag;
+    private String tag;
     /**
      * 描述
      */
@@ -52,4 +48,9 @@ public class Blog extends BaseDomain {
      * 点赞次数
      */
     private Integer startNum;
+
+    /**
+     * 展示图
+     */
+    private String icon;
 }

@@ -3,11 +3,7 @@ package edu.blog.domain;
 import edu.blog.core.base.dto.BaseDomain;
 import lombok.Data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 /**
  * 社团道具
@@ -18,7 +14,6 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "League_Prop")
 public class LeagueProp extends BaseDomain {
-
 
 
     /**

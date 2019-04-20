@@ -29,7 +29,7 @@ public class User extends BaseDomain {
     /**
      * 头像
      */
-    private String       avatar;
+    private String       icon;
     private UserTypeEnum type;
 
     public enum UserTypeEnum {

@@ -3,11 +3,7 @@ package edu.blog.domain;
 import edu.blog.core.base.dto.BaseDomain;
 import lombok.Data;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import javax.persistence.Table;
 
 /**
  * @author 执笔

@@ -1,10 +1,21 @@
 package edu.blog.controller;
 
+import com.github.pagehelper.PageInfo;
+import edu.blog.core.mybatis.condition.MybatisCondition;
+import edu.blog.domain.Blog;
+import edu.blog.domain.League;
+import edu.blog.domain.Tag;
+import edu.blog.dto.BlogDTO;
 import edu.blog.service.BlogService;
+import edu.blog.service.LeagueService;
+import edu.blog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 
 /**
@@ -15,7 +26,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     @Autowired
-    private BlogService blogService;
+    private BlogService   blogService;
+    @Autowired
+    private TagService    tagService;
+    @Autowired
+    private LeagueService leagueService;
 
 
     /**
@@ -25,7 +40,33 @@ public class IndexController {
      * @return
      */
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, String title, @RequestParam(defaultValue = "1") int pageNum) {
+        // 博客列表
+        MybatisCondition condition = new MybatisCondition()
+                .like("b.title", title)
+                .order("b.id", false)
+                .page(pageNum, 20);
+        PageInfo<BlogDTO> blogPageInfo = blogService.selectDtoPage(condition);
+        // 标签
+        condition = new MybatisCondition()
+                .order("blog_num", false)
+                .page(pageNum, 12);
+        List<Tag> tagList = tagService.selectPage(condition).getList();
+        // 社团
+        condition = new MybatisCondition()
+                .order("user_num", false)
+                .page(pageNum, 6);
+        List<League> leagueList = leagueService.selectPage(condition).getList();
+        // 推荐博客
+        condition = new MybatisCondition()
+                .order("browse_num", false)
+                .page(pageNum, 10);
+        List<Blog> blogList = blogService.selectPage(condition).getList();
+
+        model.addAttribute("pageInfo", blogPageInfo);
+        model.addAttribute("tagList", tagList);
+        model.addAttribute("leagueList", leagueList);
+        model.addAttribute("blogList", blogList);
         return "index";
     }
 
