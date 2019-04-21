@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+<#include "../common/menu.html"/>
+<!--中间内容-->
+<div id="container" class="m-container-small m-padded-tb-big animated fadeIn">
+  <div class="ui container">
+    <!--header-->
+    <div class="ui top attached segment">
+      <div class="ui middle aligned two column grid">
+        <div class="column">
+          <h3 class="ui teal header">和我相关的社团</h3>
+        </div>
+        <div class="right aligned column">
+          共 <h2 class="ui orange header m-inline-block m-text-thin"> ${leagueList?size} </h2> 个
+        </div>
+      </div>
+    </div>
+
+    <div class="ui attached segment m-padded-tb-large">
+      <#list leagueList as item>
+        <a href="/league/myList?leagueId=${item.id}" data-val="${item.id}"
+           class="ui basic left pointing large label m-margin-tb-tiny league-item <#if item.id == leagueId!></#if>">
+          <span>${item.name}</span>
+          <div class="detail">${item.userNum}</div>
+        </a>
+      </#list>
+    </div>
+
+    <div id="table-container">'
+      <h3>社团用户</h3>
+      <table class="ui compact teal table">
+        <thead>
+        <tr>
+          <th>用户名</th>
+          <th>头像</th>
+          <th>状态</th>
+          <th>更新时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list leagueUserList as item>
+          <tr>
+            <td>${item.userName}</td>
+            <td><img src="${item.userIcon}" width="100px" height="100px"></td>
+            <td>${item.status?switch("APPLY","申请中","AGREE","已同意","已拒绝")}</td>
+            <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+            <td>
+              <#if item.status == "APPLY" && leagueUser??>
+                <a href="#" onclick="if(confirm('确认要同意吗？')){location.href='/league/userApply/${item.id}/AGREE'}"
+                   class="ui mini red basic button">同意</a>
+                <a href="#" onclick="if(confirm('确认要拒绝吗？')){location.href='/league/userApply/${item.id}/REJECT'}"
+                   class="ui mini red basic button">拒绝</a>
+              </#if>
+            </td>
+          </tr>
+        </#list>
+        </tbody>
+      </table>
+      <h3>社团道具</h3>
+      <table class="ui compact teal table">
+        <thead>
+        <tr>
+          <th>道具名字</th>
+          <th>备注</th>
+          <th>更新时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list leaguePropList as item>
+          <tr>
+            <td>${item.name}</td>
+            <td>${item.remark}</td>
+            <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+            <td>
+              <#if  leagueUser??>
+                <a href="#" onclick="if(confirm('确认要删除吗？')){location.href='/league/delProp/${item.id}'}"
+                   class="ui mini red basic button">删除</a>
+              </#if>
+
+            </td>
+          </tr>
+        </#list>
+        </tbody>
+      </table>
+      <#if errorMessage?? && errorMessage?length gt 0>
+        <div class="ui success message">
+          <i class="close icon"></i>
+          <div class="header">提示：</div>
+          <p>${errorMessage}</p>
+        </div>
+      </#if>
+    </div>
+
+  </div>
+</div>
+
+<#include "../common/footer.html"/>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+
+</script>
+</body>
+</html>

@@ -24,6 +24,10 @@ public class LeagueProp extends BaseDomain {
      * 道具名称
      */
     private String  name;
+    /**
+     * 备注
+     */
+    private String  remark;
 
 
 }

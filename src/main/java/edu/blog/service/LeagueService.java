@@ -1,14 +1,21 @@
 package edu.blog.service;
 
 
-import edu.blog.domain.League;
 import edu.blog.core.base.service.BaseService;
+import edu.blog.domain.League;
+import edu.blog.domain.LeagueUser;
 
 /**
- *  服务类
+ * 服务类
  *
  * @author 执笔
  * @date 2019-04-20  17:43:03
  */
 public interface LeagueService extends BaseService<League> {
+    /**
+     * 对申请用户操作
+     *
+     * @param leagueUser
+     */
+    void auth(LeagueUser leagueUser);
 }

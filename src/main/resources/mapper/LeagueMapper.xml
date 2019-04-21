@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.blog.mapper.LeagueMapper">
 
+    <select id="selectByUser" resultType="edu.blog.domain.League">
+        select l.* from league l
+        left join league_user lu on lu.league_id = l.id
+        where lu.user_id = #{userId}
+    </select>
 </mapper>
