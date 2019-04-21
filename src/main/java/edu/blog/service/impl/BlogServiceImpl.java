@@ -11,6 +11,7 @@ import edu.blog.mapper.TagMapper;
 import edu.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -48,6 +49,7 @@ public class BlogServiceImpl extends BaseServiceImpl<BlogMapper, Blog> implement
         }
     }
 
+    @Transactional
     @Override
     public void delete(Integer id) {
         Blog blog = blogMapper.selectByPrimaryKey(id);

@@ -17,13 +17,13 @@ public class Comment extends BaseDomain {
     /**
      * 评论人
      */
-    private String userId;
+    private Integer userId;
     /**
      * 博客ID
      */
-    private String blogId;
+    private Integer  blogId;
     /**
      * 内容
      */
-    private String content;
+    private String  content;
 }

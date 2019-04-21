@@ -44,9 +44,12 @@ public class TagController extends BaseController {
      * @return
      */
     @GetMapping("list")
-    public String tags(Model model, Integer tagId, @RequestParam(defaultValue = "1") int pageNum) {
+    public String tags(Model model, Integer tagId, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "1") String tagName) {
         List<Tag> tags = tagMapper.selectAll();
         Tag       tag  = tagMapper.selectByPrimaryKey(tagId);
+        if (tag == null) {
+            tag = tagMapper.selectOne(new Tag().setName(tagName));
+        }
         MybatisCondition condition = new MybatisCondition()
                 .page(pageNum, 20)
                 .order("b.id", false);
@@ -56,7 +59,7 @@ public class TagController extends BaseController {
         PageInfo<BlogDTO> pageInfo = blogService.selectDtoPage(condition);
         model.addAttribute("tags", tags);
         model.addAttribute("pageInfo", pageInfo);
-        model.addAttribute("tagId", tagId);
+        model.addAttribute("tagId", tag.getId());
         return "tags";
     }
 }
