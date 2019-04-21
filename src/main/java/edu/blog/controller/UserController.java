@@ -3,9 +3,12 @@ package edu.blog.controller;
 import com.github.pagehelper.PageInfo;
 import edu.blog.core.annocation.RequestLogin;
 import edu.blog.core.base.controller.BaseController;
+import edu.blog.core.context.Constant;
 import edu.blog.core.mybatis.condition.MybatisCondition;
 import edu.blog.domain.Blog;
+import edu.blog.domain.User;
 import edu.blog.mapper.BlogMapper;
+import edu.blog.mapper.UserMapper;
 import edu.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +34,8 @@ public class UserController extends BaseController {
     private BlogService blogService;
     @Autowired
     private BlogMapper  blogMapper;
+    @Autowired
+    private UserMapper  userMapper;
 
     /**
      * 个人中心
@@ -97,6 +102,35 @@ public class UserController extends BaseController {
         blogService.send(blog);
         model.addFlashAttribute(ERROR_MESSAGE, "发布成功");
         return redirect("/user/blogList");
+    }
+
+    /**
+     * 个人详情
+     *
+     * @return
+     */
+    @GetMapping("detail")
+    public String detail(Model model) {
+        User user = userMapper.selectByPrimaryKey(sessionUser().getId());
+        model.addAttribute(user);
+        return "user/detail";
+    }
+
+    /**
+     * 更新
+     *
+     * @return
+     */
+    @PostMapping("update")
+    public String update(User user, MultipartFile file, RedirectAttributes model) {
+        if (file != null && !file.isEmpty()) {
+            user.setIcon(saveFile(file));
+        }
+        user.setUpdateTime(LocalDateTime.now());
+        userMapper.updateByPrimaryKeySelective(user);
+        session.setAttribute(Constant.SESSION_USER, user);
+        model.addFlashAttribute(ERROR_MESSAGE, "更新成功");
+        return refresh();
     }
 
 

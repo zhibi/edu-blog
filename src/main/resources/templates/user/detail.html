@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+
+<!--导航-->
+<#include "../common/menu.html"/>
+
+<!--中间内容-->
+<div class="m-container m-padded-tb-big">
+  <div class="ui container">
+    <form id="blog-form" action="/user/update" method="post" class="ui form" enctype="multipart/form-data">
+      <h4 class="ui dividing header">个人信息</h4>
+      <input type="hidden" name="id" value="${user.id}">
+      <div class="field">
+        <label>用户名</label>
+        <input type="text" value="${user.username!}" disabled>
+      </div>
+      <div class="field required">
+        <label>头像</label>
+        <img src="${user.icon}" width="100px" height="100px">
+      </div>
+      <div class="field required">
+        <label>昵称</label>
+        <input type="text" name="name" value="${user.name}">
+      </div>
+      <div class="field required">
+        <label>邮箱</label>
+        <input type="email" name="email" value="${user.email!}">
+      </div>
+      <div class="field ">
+        <label>新头像</label>
+        <input type="file" name="file">
+      </div>
+
+
+      <div class="ui right aligned container">
+        <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+        <button type="submit" id="publish-btn" class="ui teal button">更新</button>
+      </div>
+
+    </form>
+    <#if errorMessge?? && errorMessge?length gt 0>
+      <div class="ui success message">
+        <div class="header">提示</div>
+        <p>${errorMessge}</p>
+      </div>
+    </#if>
+
+  </div>
+</div>
+
+<#include "../common/footer.html"/>
+<script>
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+    $('#save-btn').click(function () {
+        $('[name="published"]').val(false);
+        $('#blog-form').submit();
+    });
+
+
+    $('#publish-btn').click(function () {
+        $('[name="published"]').val(true);
+        $('#blog-form').submit();
+    });
+
+</script>
+</body>
+</html>
