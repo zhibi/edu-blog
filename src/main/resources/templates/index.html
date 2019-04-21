@@ -51,7 +51,8 @@
                       </div>
                     </div>
                     <div class="right aligned five wide column">
-                      <a href="/tag/list?name=${item.tagName!}" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">${item.tag!}</a>
+                      <a href="/tag/list?tagName=${item.tag!}" target="_blank"
+                         class="ui teal basic label m-padded-tiny m-text-thin">${item.tag!}</a>
                     </div>
                   </div>
                 </div>
@@ -101,7 +102,7 @@
           <div class="ui teal segment">
             <div class="ui fluid vertical menu">
               <#list leagueList as item>
-                <a href="/league/detail/${item.id}" target="_blank" class="item">
+                <a href="#" target="_blank" class="item">
                   <span>${item.name!}</span>
                   <div class="ui teal basic left pointing label">${item.userNum}</div>
                 </a>
