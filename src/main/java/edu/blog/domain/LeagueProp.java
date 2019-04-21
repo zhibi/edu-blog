@@ -2,6 +2,7 @@ package edu.blog.domain;
 
 import edu.blog.core.base.dto.BaseDomain;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Table;
 
@@ -13,6 +14,7 @@ import javax.persistence.Table;
  */
 @Data
 @Table(name = "League_Prop")
+@Accessors(chain = true)
 public class LeagueProp extends BaseDomain {
 
 

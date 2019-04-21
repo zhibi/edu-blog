@@ -40,7 +40,7 @@ public class LeagueController extends BaseController {
     @Autowired
     private LeaguePropMapper leaguePropMapper;
     @Autowired
-    private LeagueService leagueService;
+    private LeagueService    leagueService;
 
     /**
      * 社团列表
@@ -144,6 +144,50 @@ public class LeagueController extends BaseController {
         leagueService.auth(leagueUser);
         model.addFlashAttribute(ERROR_MESSAGE, "操作成功");
         return refresh();
+    }
+
+    /**
+     * 添加道具
+     *
+     * @return
+     */
+    @GetMapping("addProp/{id}")
+    @RequestLogin
+    public String addProp(Model model, @PathVariable Integer id) {
+        model.addAttribute(new LeagueProp().setLeagueId(id));
+        return "league/prop-input";
+    }
+
+    /**
+     * 添加道具
+     *
+     * @return
+     */
+    @PostMapping("addProp")
+    @RequestLogin
+    public String addProp(LeagueProp leagueProp) {
+        if (leagueProp.getId() == null || leagueProp.getId() <= 0) {
+            leagueProp.setCreateTime(LocalDateTime.now());
+            leaguePropMapper.insertSelective(leagueProp);
+        } else {
+            leaguePropMapper.updateByPrimaryKeySelective(leagueProp);
+        }
+        return redirect("/league/myList?leagueId=" + leagueProp.getLeagueId());
+    }
+
+    /**
+     * 道具详情
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("detailProp/{id}")
+    @RequestLogin
+    public String detailProp(@PathVariable Integer id, Model model) {
+        LeagueProp leagueProp = leaguePropMapper.selectByPrimaryKey(id);
+        model.addAttribute(leagueProp);
+        return "league/prop-input";
     }
 
 }

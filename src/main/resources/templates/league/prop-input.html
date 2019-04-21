@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+
+<!--导航-->
+<#include "../common/menu.html"/>
+
+<!--中间内容-->
+<div class="m-container m-padded-tb-big">
+  <div class="ui container">
+    <form id="blog-form" action="/league/addProp" method="post" class="ui form">
+      <input type="hidden" name="id" value="${leagueProp.id!}">
+      <input type="hidden" name="leagueId" value="${leagueProp.leagueId!}">
+
+      <div class="required field">
+        <div class="ui left labeled input">
+          <input type="text" name="name" required placeholder="名字" value="${leagueProp.name!}">
+        </div>
+      </div>
+        <div class="required field">
+          <textarea name="remark" required placeholder="备注..." maxlength="200">${leagueProp.remark!}</textarea>
+        </div>
+      </div>
+
+      <div class="ui right aligned container">
+        <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+        <button type="button" id="publish-btn" class="ui teal button">添加</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<#include "../common/footer.html"/>
+<script>
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+    $('#save-btn').click(function () {
+        $('[name="published"]').val(false);
+        $('#blog-form').submit();
+    });
+
+
+    $('#publish-btn').click(function () {
+        $('[name="published"]').val(true);
+        $('#blog-form').submit();
+    });
+
+</script>
+</body>
+</html>

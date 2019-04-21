@@ -79,12 +79,22 @@
               <#if  leagueUser??>
                 <a href="#" onclick="if(confirm('确认要删除吗？')){location.href='/league/delProp/${item.id}'}"
                    class="ui mini red basic button">删除</a>
+                <a href="/league/detailProp/${item.id}" class="ui mini red basic button">修改</a>
               </#if>
 
             </td>
           </tr>
         </#list>
         </tbody>
+        <#if leagueId?? && leagueId gt 0>
+          <tfoot>
+          <tr>
+            <th colspan="7">
+              <a href="/league/addProp/${leagueId!}" class="ui mini right floated teal basic button">新增</a>
+            </th>
+          </tfoot>
+        </#if>
+
       </table>
       <#if errorMessage?? && errorMessage?length gt 0>
         <div class="ui success message">
