@@ -37,13 +37,13 @@
         <div class="required field">
           <textarea name="description" required placeholder="博客描述..." maxlength="200"></textarea>
         </div>
+      </div>
+      <div class="ui error message"></div>
 
-        <div class="ui error message"></div>
-
-        <div class="ui right aligned container">
-          <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
-          <button type="button" id="publish-btn" class="ui teal button">发布</button>
-        </div>
+      <div class="ui right aligned container">
+        <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+        <button type="button" id="publish-btn" class="ui teal button">发布</button>
+      </div>
 
     </form>
   </div>
@@ -67,17 +67,6 @@
 </script>
 <script>
 
-    //初始化Markdown编辑器
-    var contentEditor;
-    $(function () {
-        contentEditor = editormd("md-content", {
-            width: "100%",
-            height: 640,
-            syncScrolling: "single",
-//        path    : "../static/lib/editormd/lib/"
-            path: "/lib/editormd/lib/"
-        });
-    });
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
@@ -95,47 +84,6 @@
     $('#publish-btn').click(function () {
         $('[name="published"]').val(true);
         $('#blog-form').submit();
-    });
-
-
-    $('.ui.form').form({
-        fields: {
-            title: {
-                identifier: 'title',
-                rules: [{
-                    type: 'empty',
-                    prompt: '标题：请输入博客标题'
-                }]
-            },
-            content: {
-                identifier: 'content',
-                rules: [{
-                    type: 'empty',
-                    prompt: '标题：请输入博客内容'
-                }]
-            },
-            typeId: {
-                identifier: 'type.id',
-                rules: [{
-                    type: 'empty',
-                    prompt: '标题：请输入博客分类'
-                }]
-            },
-            firstPicture: {
-                identifier: 'firstPicture',
-                rules: [{
-                    type: 'empty',
-                    prompt: '标题：请输入博客首图'
-                }]
-            },
-            description: {
-                identifier: 'description',
-                rules: [{
-                    type: 'empty',
-                    prompt: '标题：请输入博客描述'
-                }]
-            }
-        }
     });
 
 </script>
