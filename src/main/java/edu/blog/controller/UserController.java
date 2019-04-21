@@ -65,7 +65,8 @@ public class UserController extends BaseController {
      * @return
      */
     @GetMapping("sendBlog")
-    public String sendBlog() {
+    public String sendBlog(Model model) {
+        model.addAttribute(new Blog());
         return "user/blog-input";
     }
 
@@ -83,6 +84,20 @@ public class UserController extends BaseController {
     }
 
     /**
+     * 博客详情
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("detailBlog/{id}")
+    public String detailBlog(@PathVariable Integer id, Model model) {
+        Blog blog = blogMapper.selectByPrimaryKey(id);
+        model.addAttribute(blog);
+        return "user/blog-input";
+    }
+
+    /**
      * 发布博客
      *
      * @param blog
@@ -93,7 +108,7 @@ public class UserController extends BaseController {
     public String sendBlog(Blog blog, MultipartFile file, RedirectAttributes model) {
         if (file != null && !file.isEmpty()) {
             blog.setIcon(saveFile(file));
-        } else {
+        } else if (blog.getId() == null || blog.getId() <= 0) {
             model.addFlashAttribute(ERROR_MESSAGE, "请选择首图");
             return redirect("/user/blogList");
         }

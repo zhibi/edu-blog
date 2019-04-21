@@ -37,7 +37,12 @@ public class BlogServiceImpl extends BaseServiceImpl<BlogMapper, Blog> implement
 
     @Override
     public void send(Blog blog) {
-        blogMapper.insertSelective(blog);
+        if (blog.getId() == null || blog.getId() <= 0) {
+            blogMapper.insertSelective(blog);
+
+        } else {
+            blogMapper.updateByPrimaryKeySelective(blog);
+        }
         Tag tag = tagMapper.selectOne(new Tag().setName(blog.getTag()));
         if (tag == null) {
             tag = new Tag().setName(blog.getTag()).setBlogNum(1);

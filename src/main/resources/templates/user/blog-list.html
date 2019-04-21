@@ -30,7 +30,7 @@
             <td>${item.browseNum}</td>
             <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
             <td>
-              <#--<a href="#" class="ui mini teal basic button">编辑</a>-->
+              <a href="/user/detailBlog/${item.id}" class="ui mini teal basic button">编辑</a>
               <a href="#" onclick="if(confirm('确认要删除吗？')){location.href='/user/delBlog/${item.id}'}"
                  class="ui mini red basic button">删除</a>
             </td>

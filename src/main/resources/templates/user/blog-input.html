@@ -9,16 +9,18 @@
 <!--中间内容-->
 <div class="m-container m-padded-tb-big">
   <div class="ui container">
-    <form id="blog-form" action="/user/sendBlog" method="post" class="ui form" enctype="multipart/form-data" onsubmit="formSubmit()">
+    <form id="blog-form" action="/user/sendBlog" method="post" class="ui form" enctype="multipart/form-data"
+          onsubmit="formSubmit()">
+      <input type="hidden" name="id" value="${blog.id!}">
       <div class="required field">
         <div class="ui left labeled input">
-          <input type="text" name="title" required placeholder="标题">
+          <input type="text" name="title" required placeholder="标题" value="${blog.title!}">
         </div>
       </div>
 
       <div class="required field">
         <div id="md-content" style="z-index: 1 !important;">
-          <script id="container" name="content" type="text/plain"></script>
+          <script id="container" name="content" type="text/plain">${blog.content!}</script>
         </div>
       </div>
 
@@ -31,11 +33,11 @@
       <div class="required field">
         <div class="ui left labeled input">
           <label class="ui teal basic label">标签</label>
-          <input type="text" required name="tag">
+          <input type="text" required name="tag" value="${blog.tag!}">
         </div>
 
         <div class="required field">
-          <textarea name="description" required placeholder="博客描述..." maxlength="200"></textarea>
+          <textarea name="description" required placeholder="博客描述..." maxlength="200">${blog.description!}</textarea>
         </div>
       </div>
       <div class="ui error message"></div>
