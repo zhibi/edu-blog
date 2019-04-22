@@ -28,92 +28,94 @@
       </#list>
     </div>
 
-    <div id="table-container">'
-      <h3>社团用户</h3>
-      <table class="ui compact teal table">
-        <thead>
-        <tr>
-          <th>用户名</th>
-          <th>头像</th>
-          <th>职务</th>
-          <th>状态</th>
-          <th>更新时间</th>
-          <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <#list leagueUserList as item>
+    <#if leagueUser??>
+      <div id="table-container">'
+        <h3>社团用户</h3>
+        <table class="ui compact teal table">
+          <thead>
           <tr>
-            <td>${item.userName}</td>
-            <td><img src="${item.userIcon}" width="100px" height="100px"></td>
-            <td>${item.name}</td>
-            <td>${item.status?switch("APPLY","申请中","AGREE","已同意","已拒绝")}</td>
-            <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
-            <td>
-              <#if item.status == "APPLY" && leagueUser.type!= "DEFAULT">
-                <a href="#" onclick="if(confirm('确认要同意吗？')){location.href='/league/userApply/${item.id}/AGREE'}"
-                   class="ui mini red basic button">同意</a>
-                <a href="#" onclick="if(confirm('确认要拒绝吗？')){location.href='/league/userApply/${item.id}/REJECT'}"
-                   class="ui mini red basic button">拒绝</a>
-              </#if>
-              <#if leagueUser.type!= "DEFAULT" && item.type!='OWNER'>
-                <a href="#" onclick="if(confirm('确认要踢出吗？')){location.href='/league/quit/${item.leagueId}?userId${item.userId}'}"
-                   class="ui mini red basic button">踢出</a>
-              </#if>
-              <#if item.userId == sessionUser.id>
-                <a href="#" onclick="if(confirm('确认要退出吗？')){location.href='/league/quit/${item.leagueId}'}"
-                   class="ui mini red basic button">退出</a>
-              </#if>
-            </td>
+            <th>用户名</th>
+            <th>头像</th>
+            <th>职务</th>
+            <th>状态</th>
+            <th>更新时间</th>
+            <th>操作</th>
           </tr>
-        </#list>
-        </tbody>
-      </table>
-      <h3>社团道具</h3>
-      <table class="ui compact teal table">
-        <thead>
-        <tr>
-          <th>道具名字</th>
-          <th>备注</th>
-          <th>更新时间</th>
-          <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <#list leaguePropList as item>
+          </thead>
+          <tbody>
+          <#list leagueUserList as item>
+            <tr>
+              <td>${item.userName}</td>
+              <td><img src="${item.userIcon}" width="100px" height="100px"></td>
+              <td>${item.name}</td>
+              <td>${item.status?switch("APPLY","申请中","AGREE","已同意","已拒绝")}</td>
+              <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+              <td>
+                <#if item.status == "APPLY" && leagueUser.type!= "DEFAULT">
+                  <a href="#" onclick="if(confirm('确认要同意吗？')){location.href='/league/userApply/${item.id}/AGREE'}"
+                     class="ui mini red basic button">同意</a>
+                  <a href="#" onclick="if(confirm('确认要拒绝吗？')){location.href='/league/userApply/${item.id}/REJECT'}"
+                     class="ui mini red basic button">拒绝</a>
+                </#if>
+                <#if leagueUser.type!= "DEFAULT" && item.type!='OWNER' && leagueUser.userId! != item.userId>
+                  <a href="#"
+                     onclick="if(confirm('确认要踢出吗？')){location.href='/league/quit/${item.leagueId}?userId${item.userId}'}"
+                     class="ui mini red basic button">踢出</a>
+                </#if>
+                <#if item.userId == leagueUser.userId!>
+                  <a href="#" onclick="if(confirm('确认要退出吗？')){location.href='/league/quit/${item.leagueId}'}"
+                     class="ui mini red basic button">退出</a>
+                </#if>
+              </td>
+            </tr>
+          </#list>
+          </tbody>
+        </table>
+        <h3>社团道具</h3>
+        <table class="ui compact teal table">
+          <thead>
           <tr>
-            <td>${item.name}</td>
-            <td>${item.remark}</td>
-            <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
-            <td>
-              <#if  leagueUser??>
-                <a href="#" onclick="if(confirm('确认要删除吗？')){location.href='/league/delProp/${item.id}'}"
-                   class="ui mini red basic button">删除</a>
-                <a href="/league/detailProp/${item.id}" class="ui mini red basic button">修改</a>
-              </#if>
-
-            </td>
+            <th>道具名字</th>
+            <th>备注</th>
+            <th>更新时间</th>
+            <th>操作</th>
           </tr>
-        </#list>
-        </tbody>
-        <#if leagueId?? && leagueId gt 0>
-          <tfoot>
-          <tr>
-            <th colspan="7">
-              <a href="/league/addProp/${leagueId!}" class="ui mini right floated teal basic button">新增</a>
-            </th>
-          </tfoot>
-        </#if>
+          </thead>
+          <tbody>
+          <#list leaguePropList as item>
+            <tr>
+              <td>${item.name}</td>
+              <td>${item.remark}</td>
+              <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+              <td>
+                <#if   leagueUser.type!= "DEFAULT">
+                  <a href="#" onclick="if(confirm('确认要删除吗？')){location.href='/league/delProp/${item.id}'}"
+                     class="ui mini red basic button">删除</a>
+                  <a href="/league/detailProp/${item.id}" class="ui mini red basic button">修改</a>
+                </#if>
 
-      </table>
-      <#if errorMessage?? && errorMessage?length gt 0>
-        <div class="ui success message">
-          <i class="close icon"></i>
-          <div class="header">提示：</div>
-          <p>${errorMessage}</p>
-        </div>
-      </#if>
-    </div>
+              </td>
+            </tr>
+          </#list>
+          </tbody>
+          <#if  leagueUser.type!= "DEFAULT">
+            <tfoot>
+            <tr>
+              <th colspan="7">
+                <a href="/league/addProp/${leagueId!}" class="ui mini right floated teal basic button">新增</a>
+              </th>
+            </tfoot>
+          </#if>
+        </table>
+      </div>
+    </#if> <#if errorMessage?? && errorMessage?length gt 0>
+      <div class="ui success message">
+        <i class="close icon"></i>
+        <div class="header">提示：</div>
+        <p>${errorMessage}</p>
+      </div>
+    </#if>
+
 
   </div>
 </div>
