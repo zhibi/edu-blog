@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -90,6 +91,8 @@ public class LeagueController extends BaseController {
             List<LeagueProp> leaguePropList = leaguePropMapper.selectByExample(new MybatisCondition()
                     .eq("league_Id", league.getId()));
             model.addAttribute("leaguePropList", leaguePropList);
+
+            model.addAttribute(league);
         }
         return "league/my-list";
     }
@@ -100,9 +103,9 @@ public class LeagueController extends BaseController {
         // 社团的博客
         List<BlogDTO> blogDTOList = blogMapper.selectDtoByLeague(id);
         model.addAttribute(league);
-        model.addAttribute("blogDTOList",blogDTOList);
+        model.addAttribute("blogDTOList", blogDTOList);
         // 判断是否已经加入
-        if(sessionUser() != null){
+        if (sessionUser() != null) {
             LeagueUser leagueUser = leagueUserMapper.selectOne(new LeagueUser().setUserId(sessionUser().getId()).setLeagueId(id));
             model.addAttribute(leagueUser);
         }
@@ -186,5 +189,37 @@ public class LeagueController extends BaseController {
         return "league/prop-input";
     }
 
+    /**
+     * 更新社团信息
+     *
+     * @return
+     */
+    @RequestLogin
+    @GetMapping("detailInfo/{id}")
+    public String detailInfo(@PathVariable Integer id, Model model) {
+        League league = leagueMapper.selectByPrimaryKey(id);
+        model.addAttribute(league);
+        return "league/update";
+    }
+
+    /**
+     * 更新社团
+     *
+     * @param league
+     * @param file
+     * @param model
+     * @return
+     */
+    @PostMapping("update")
+    @RequestLogin
+    public String update(League league, MultipartFile file, RedirectAttributes model) {
+        if (file != null && !file.isEmpty()) {
+            league.setIcon(saveFile(file));
+        }
+        league.setUpdateTime(LocalDateTime.now());
+        leagueMapper.updateByPrimaryKeySelective(league);
+        model.addFlashAttribute(ERROR_MESSAGE, "更新成功");
+        return redirect("/league/myList?leagueId=" + league.getId());
+    }
 
 }
