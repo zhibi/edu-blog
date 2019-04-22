@@ -9,8 +9,11 @@ import edu.blog.service.LeagueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.time.LocalDateTime;
 
 /**
  * @author 执笔
@@ -53,7 +56,7 @@ public class AdminLeagueController extends BaseAdminController {
     public String detail(@PathVariable Integer id, Model model) {
         League league = leagueMapper.selectByPrimaryKey(id);
         model.addAttribute(league);
-        return "admin/league/detail";
+        return "admin/league/update";
     }
 
     /**
@@ -64,7 +67,25 @@ public class AdminLeagueController extends BaseAdminController {
      */
     @RequestMapping("update")
     public String update(League league) {
-        leagueMapper.updateByPrimaryKeySelective(league);
-        return refresh();
+        if (league.getId() == null || league.getId() <= 0) {
+            league.setCreateTime(LocalDateTime.now());
+            leagueMapper.insertSelective(league);
+        } else {
+            leagueMapper.updateByPrimaryKeySelective(league);
+        }
+        return redirect("/admin/league/list");
     }
+
+    /**
+     * 添加社团
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("add")
+    public String add(Model model) {
+        model.addAttribute(new League());
+        return "admin/league/update";
+    }
+
 }
