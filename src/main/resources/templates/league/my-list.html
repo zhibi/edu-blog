@@ -66,6 +66,10 @@
                   <a href="#" onclick="if(confirm('确认要退出吗？')){location.href='/league/quit/${item.leagueId}'}"
                      class="ui mini red basic button">退出</a>
                 </#if>
+                <#if leagueUser.type! == "OWNER" && item.type!='OWNER'>
+                  <a href="/league/detailUser/${item.id}"
+                     class="ui mini red basic button">修改职务</a>
+                </#if>
               </td>
             </tr>
           </#list>

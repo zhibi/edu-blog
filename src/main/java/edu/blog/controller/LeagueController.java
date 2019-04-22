@@ -222,4 +222,33 @@ public class LeagueController extends BaseController {
         return redirect("/league/myList?leagueId=" + league.getId());
     }
 
+    /**
+     * 社团职务详情
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestLogin
+    @GetMapping("detailUser/{id}")
+    public String detailUser(@PathVariable Integer id, Model model) {
+        LeagueUser leagueUser = leagueUserMapper.selectByPrimaryKey(id);
+        model.addAttribute(leagueUser);
+        return "league/user-update";
+    }
+
+    /**
+     * 更新社团用户职务
+     *
+     * @param leagueUser
+     * @return
+     */
+    @RequestLogin
+    @PostMapping("updateUser")
+    public String updateUser(LeagueUser leagueUser, RedirectAttributes model) {
+        leagueUserMapper.updateByPrimaryKeySelective(leagueUser);
+        model.addFlashAttribute(ERROR_MESSAGE, "更新成功");
+        return redirect("/league/myList?leagueId=" + leagueUser.getLeagueId());
+    }
+
 }

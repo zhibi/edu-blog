@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+
+<!--导航-->
+<#include "../common/menu.html"/>
+
+<!--中间内容-->
+<div class="m-container m-padded-tb-big">
+  <div class="ui container">
+    <form id="blog-form" action="/league/updateUser" method="post" class="ui form">
+      <input type="hidden" name="id" value="${leagueUser.id!}">
+      <input type="hidden" name="leagueId" value="${leagueUser.leagueId!}">
+
+      <div class="required field">
+        <div class="ui left labeled input">
+          <input type="text" name="name" required placeholder="名称" value="${leagueUser.name!}">
+        </div>
+      </div>
+      <div class="required field">
+        <select class="ui dropdown" name="type">
+          <option value="">社团职务</option>
+          <option value="DEFAULT">普通团员</option>
+          <option value=LEADER>领导</option>
+        </select>
+      </div>
+
+      <div class="ui right aligned container">
+        <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+        <button type="button" id="publish-btn" class="ui teal button">添加</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<#include "../common/footer.html"/>
+<script>
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+    $('#save-btn').click(function () {
+        $('[name="published"]').val(false);
+        $('#blog-form').submit();
+    });
+
+
+    $('#publish-btn').click(function () {
+        $('[name="published"]').val(true);
+        $('#blog-form').submit();
+    });
+
+</script>
+</body>
+</html>
