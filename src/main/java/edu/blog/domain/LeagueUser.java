@@ -29,6 +29,11 @@ public class LeagueUser extends BaseDomain {
      */
     private Integer operationId;
 
+    /**
+     * 社团中的名字
+     */
+    private String name;
+
     private LeagueUserTypeEnum type;
 
     private LeagueUserStatusEnum status;
@@ -57,6 +62,10 @@ public class LeagueUser extends BaseDomain {
         /**
          * 领导
          */
-        LEADER
+        LEADER,
+        /**
+         * 拥有者
+         */
+        OWNER;
     }
 }

@@ -2,6 +2,7 @@ package edu.blog.controller.admin;
 
 import edu.blog.core.base.controller.BaseAdminController;
 import edu.blog.core.exception.MessageException;
+import edu.blog.core.util.JsonResult;
 import edu.blog.core.util.MD5Utils;
 import edu.blog.domain.User;
 import edu.blog.mapper.UserMapper;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import zhibi.fast.commons.response.JsonResponse;
 
 /**
  * @author 执笔
@@ -87,7 +87,7 @@ public class AdminController extends BaseAdminController {
      */
     @RequestMapping("modifyPwd")
     @ResponseBody
-    public JsonResponse<String> modifyPwd(String password, String pwd, String pwd2) {
+    public JsonResult<String> modifyPwd(String password, String pwd, String pwd2) {
         if (!pwd.equals(pwd2)) {
             throw new MessageException("两次密码不一样");
         }
@@ -99,7 +99,7 @@ public class AdminController extends BaseAdminController {
         user.setPassword(MD5Utils.code(pwd));
         userMapper.updateByPrimaryKeySelective(user);
         session.removeAttribute(SESSION_ADMIN);
-        return JsonResponse.success("success");
+        return JsonResult.success("success");
     }
 
 }

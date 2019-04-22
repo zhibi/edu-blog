@@ -108,8 +108,9 @@ public class AdminLeagueController extends BaseAdminController {
     @GetMapping("updateType/{id}/{type}")
     public String updateType(@PathVariable Integer id, @PathVariable LeagueUser.LeagueUserTypeEnum type) {
         LeagueUser leagueUser = leagueUserMapper.selectByPrimaryKey(id);
-        leagueUser.setType(type);
+        leagueUser.setType(LeagueUser.LeagueUserTypeEnum.OWNER);
         leagueUser.setUpdateTime(LocalDateTime.now());
+        leagueUser.setName("社团主席");
         leagueUserMapper.updateByPrimaryKeySelective(leagueUser);
         return refresh();
     }

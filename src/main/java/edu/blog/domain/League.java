@@ -3,6 +3,7 @@ package edu.blog.domain;
 import edu.blog.core.base.dto.BaseDomain;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Table;
 
 /**
@@ -25,5 +26,26 @@ public class League extends BaseDomain {
      * 人员
      */
     private Integer userNum;
+
+    /**
+     * 内容
+     */
+    @Column(columnDefinition = "text")
+    private String content;
+
+    /**
+     * 图标
+     */
+    private String icon;
+
+    /**
+     * 联系方式
+     */
+    private String contact;
+
+    /**
+     * 标语
+     */
+    private String slogan;
 
 }

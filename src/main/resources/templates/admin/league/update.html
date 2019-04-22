@@ -56,16 +56,14 @@
                             <td>${item.userName}</td>
                             <td><img src="${item.userIcon}" width="100px" height="100px"></td>
                             <td>${item.status?switch("APPLY","申请中","AGREE","已同意","已拒绝")}</td>
-                            <td>${item.type?switch("DEFAULT","团员","领导")}</td>
+                            <td>${item.name!}</td>
                             <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
                             <td>
                               <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
                                 <#if item.type == "DEFAULT">
-                                  <a class="btn btn-xs btn-info" href="/admin/league/updateType/${item.id}/LEADER">设置为领导</a>
-                                <#else>
-                                  <a class="btn btn-xs btn-info" href="/admin/league/updateType/${item.id}/DEFAULT">设置为团员</a>
+                                  <a class="btn btn-xs btn-info"
+                                     href="/admin/league/updateType/${item.id}/OWNER">设置为领导</a>
                                 </#if>
-
                               </div>
                             </td>
                           </tr>
