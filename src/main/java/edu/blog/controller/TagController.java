@@ -52,6 +52,7 @@ public class TagController extends BaseController {
         }
         MybatisCondition condition = new MybatisCondition()
                 .page(pageNum, 20)
+                .eq("b.open", true)
                 .order("b.id", false);
         if (null != tag) {
             condition.eq("b.tag", tag.getName());

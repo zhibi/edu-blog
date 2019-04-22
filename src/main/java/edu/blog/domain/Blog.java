@@ -53,4 +53,9 @@ public class Blog extends BaseDomain {
      * 展示图
      */
     private String icon;
+
+    /**
+     * 是否公开
+     */
+    private Boolean open;
 }

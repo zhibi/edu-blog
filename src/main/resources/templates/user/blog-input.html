@@ -13,8 +13,20 @@
           onsubmit="formSubmit()">
       <input type="hidden" name="id" value="${blog.id!}">
       <div class="required field">
+
         <div class="ui left labeled input">
+            <select class="ui dropdown" name="open" style="z-index: 1000000">
+              <option value="">是否公开</option>
+              <option value="true" <#if blog.open?? && blog.open>selected</#if>>公开</option>
+              <option value="false" <#if blog.open?? && !blog.open>selected</#if>>不公开</option>
+            </select>
           <input type="text" name="title" required placeholder="标题" value="${blog.title!}">
+        </div>
+      </div>
+      <div class="required field">
+        <div class="ui left labeled input">
+          <label class="ui teal basic label">首图</label>
+          <input type="file" required name="file">
         </div>
       </div>
 
@@ -24,12 +36,7 @@
         </div>
       </div>
 
-      <div class="required field">
-        <div class="ui left labeled input">
-          <label class="ui teal basic label">首图</label>
-          <input type="file" required name="file">
-        </div>
-      </div>
+
       <div class="required field">
         <div class="ui left labeled input">
           <label class="ui teal basic label">标签</label>

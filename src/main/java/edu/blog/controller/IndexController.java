@@ -48,11 +48,12 @@ public class IndexController extends BaseController {
      * @param model
      * @return
      */
-    @GetMapping({"/","index"})
+    @GetMapping({"/", "index"})
     public String index(Model model, String title, @RequestParam(defaultValue = "1") int pageNum) {
         // 博客列表
         MybatisCondition condition = new MybatisCondition()
                 .like("b.title", title)
+                .eq("b.open", true)
                 .order("b.id", false)
                 .page(pageNum, 20);
         PageInfo<BlogDTO> blogPageInfo = blogService.selectDtoPage(condition);
