@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "../common/head.html"/>
+
+<body>
+<#assign menuAct="1"/>
+<!--导航-->
+<#include "../common/menu.html"/>
+
+<!--中间内容-->
+<div class="m-container m-padded-tb-big animated fadeIn">
+  <div class="ui container">
+    <div class="ui stackable grid">
+      <!--左边博客列表-->
+      <div class="eleven wide column">
+        <!--header-->
+        <div class="ui top attached segment">
+          <div class="ui middle aligned two column grid">
+            <div class="column">
+              <h3 class="ui teal header">发布的博客</h3>
+            </div>
+            <div class="right aligned column">
+              共 <h2 class="ui orange header m-inline-block m-text-thin"> ${blogDTOList?size} </h2> 篇
+            </div>
+          </div>
+        </div>
+
+        <!--content-->
+        <div class="ui attached  segment">
+          <#list blogDTOList as item>
+            <@blogItem item=item/>
+          </#list>
+        </div>
+      </div>
+
+      <!--右边的top-->
+      <div class="five wide column">
+
+        <div class="ui segments">
+          <div class="ui secondary segment">
+            <div class="ui two column grid">
+              <div class="column">
+                <i class="idea icon"></i>用户信息
+              </div>
+            </div>
+          </div>
+          <div class="ui teal segment">
+            <div class="ui fluid vertical menu">
+              <div class="ui card centered">
+                <div class="image">
+                  <img src="${user.icon!}">
+                </div>
+                <div class="content">
+                  <a class="header">${user.name}</a>
+                  <div class="meta">
+                    <span class="date">${user.createTime?string("yyyy-MM-dd")}</span>
+                  </div>
+                </div>
+                <div class="extra content">
+                  <a>
+                    <i class="envelope icon"></i>
+                    ${user.email!}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--社团-->
+        <div class="ui segments">
+          <div class="ui secondary segment">
+            <div class="ui two column grid">
+              <div class="column">
+                <i class="idea icon"></i>加入的社团
+              </div>
+            </div>
+          </div>
+          <div class="ui teal segment">
+            <div class="ui fluid vertical menu">
+              <#list leagueList as item>
+                <a href="#" target="_blank" class="item">
+                  <span>${item.name!}</span>
+                  <div class="ui teal basic left pointing label">${item.userNum}</div>
+                </a>
+              </#list>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="eleven wide column">
+        <!--header-->
+        <div class="ui top attached segment">
+          <div class="ui middle aligned two column grid">
+            <div class="column">
+              <h3 class="ui teal header">发布的评论</h3>
+            </div>
+            <div class="right aligned column">
+              共 <h2 class="ui orange header m-inline-block m-text-thin"> ${commentDTOList?size} </h2> 篇
+            </div>
+          </div>
+        </div>
+
+        <!--content-->
+        <div class="ui attached  segment">
+          <div class="ui threaded comments" style="max-width: 100%;">
+            <#list commentDTOList as item>
+              <div class="comment">
+                <a class="avatar">
+                  <img src="${item.userIcon}">
+                </a>
+                <div class="content">
+                  <a class="author">
+                    <span>${item.userName}</span>
+                  </a>
+                  <div class="metadata">
+                    <span class="date">${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</span>
+                  </div>
+                  <div class="text">
+                    ${item.content!}
+                  </div>
+                  <div class="actions">
+                    <a class="reply" href="/blog/detail/${item.blogId}">${item.blogTitle}</a>
+                  </div>
+                </div>
+              </div>
+              <hr/>
+            </#list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--底部footer-->
+<#include "../common/footer.html"/>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+</script>
+</body>
+</html>

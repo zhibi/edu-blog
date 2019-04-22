@@ -18,4 +18,9 @@ public class CommentDTO extends Comment {
      * 用户头像
      */
     private String userIcon;
+
+    /**
+     * 博客标题
+     */
+    private String blogTitle;
 }

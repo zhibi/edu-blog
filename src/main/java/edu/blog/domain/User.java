@@ -26,6 +26,7 @@ public class User extends BaseDomain {
      */
     private String       password;
     private String       email;
+
     /**
      * 头像
      */

@@ -2,6 +2,7 @@ package edu.blog.mapper;
 
 
 import edu.blog.core.mybatis.condition.MybatisCondition;
+import edu.blog.domain.League;
 import edu.blog.domain.LeagueUser;
 import edu.blog.dto.LeagueUserDTO;
 import tk.mybatis.mapper.common.Mapper;

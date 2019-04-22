@@ -5,6 +5,8 @@ import edu.blog.core.base.service.BaseService;
 import edu.blog.domain.League;
 import edu.blog.domain.LeagueUser;
 
+import java.util.List;
+
 /**
  * 服务类
  *
@@ -26,4 +28,5 @@ public interface LeagueService extends BaseService<League> {
      * @param userId
      */
     void quit(Integer leagueId, Integer userId);
+
 }

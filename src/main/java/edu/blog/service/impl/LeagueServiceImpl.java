@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 服务实现类
  *
@@ -47,4 +49,5 @@ public class LeagueServiceImpl extends BaseServiceImpl<LeagueMapper, League> imp
             leagueUserMapper.delete(leagueUser);
         }
     }
+
 }
