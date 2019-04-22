@@ -26,11 +26,25 @@ public class LeagueServiceImpl extends BaseServiceImpl<LeagueMapper, League> imp
     @Override
     @Transactional
     public void auth(LeagueUser leagueUser) {
+        leagueUser.setName("普通成员");
         leagueUserMapper.updateByPrimaryKeySelective(leagueUser);
         if (leagueUser.getStatus() == LeagueUser.LeagueUserStatusEnum.AGREE) {
             League league = leagueMapper.selectByPrimaryKey(leagueUser.getLeagueId());
             league.setUserNum(league.getUserNum() + 1);
             leagueMapper.updateByPrimaryKeySelective(league);
+        }
+    }
+
+    @Override
+    public void quit(Integer leagueId, Integer userId) {
+        LeagueUser leagueUser = leagueUserMapper.selectOne(new LeagueUser().setLeagueId(leagueId).setUserId(userId));
+        if (null != leagueUser) {
+            if (leagueUser.getStatus() == LeagueUser.LeagueUserStatusEnum.AGREE) {
+                League league = leagueMapper.selectByPrimaryKey(leagueUser.getLeagueId());
+                league.setUserNum(league.getUserNum() - 1);
+                leagueMapper.updateByPrimaryKeySelective(league);
+            }
+            leagueUserMapper.delete(leagueUser);
         }
     }
 }

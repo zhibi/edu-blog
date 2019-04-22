@@ -18,4 +18,12 @@ public interface LeagueService extends BaseService<League> {
      * @param leagueUser
      */
     void auth(LeagueUser leagueUser);
+
+    /**
+     * 退出社团
+     *
+     * @param leagueId
+     * @param userId
+     */
+    void quit(Integer leagueId, Integer userId);
 }

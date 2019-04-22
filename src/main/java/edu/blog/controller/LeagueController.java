@@ -54,28 +54,6 @@ public class LeagueController extends BaseController {
         return "league/list";
     }
 
-    /**
-     * 申请加入
-     *
-     * @return
-     */
-    @RequestLogin
-    @PostMapping("apply")
-    public String apply(LeagueUser leagueUser) {
-        LeagueUser one = leagueUserMapper.selectOne(new LeagueUser()
-                .setUserId(sessionUser().getId())
-                .setLeagueId(leagueUser.getLeagueId())
-                .setStatus(LeagueUser.LeagueUserStatusEnum.AGREE));
-        if (null != one) {
-            return prompt("您已经是社团成员，不需要申请");
-        }
-        leagueUser.setUserId(sessionUser().getId())
-                .setStatus(LeagueUser.LeagueUserStatusEnum.APPLY)
-                .setType(LeagueUser.LeagueUserTypeEnum.DEFAULT)
-                .setCreateTime(LocalDateTime.now());
-        leagueUserMapper.insertSelective(leagueUser);
-        return prompt("申请成功，等待社团领导审核");
-    }
 
     /**
      * 我的社团
@@ -97,8 +75,7 @@ public class LeagueController extends BaseController {
             // 是否领导
             LeagueUser leagueUser = leagueUserMapper.selectOne(new LeagueUser()
                     .setLeagueId(league.getId())
-                    .setUserId(sessionUser().getId())
-                    .setType(LeagueUser.LeagueUserTypeEnum.LEADER));
+                    .setUserId(sessionUser().getId()));
             model.addAttribute("leagueUser", leagueUser);
             model.addAttribute("leagueId", league.getId());
             // 用户
@@ -189,5 +166,6 @@ public class LeagueController extends BaseController {
         model.addAttribute(leagueProp);
         return "league/prop-input";
     }
+
 
 }
