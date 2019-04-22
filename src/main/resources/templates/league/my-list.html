@@ -59,7 +59,7 @@
                 </#if>
                 <#if leagueUser.type!= "DEFAULT" && item.type!='OWNER' && leagueUser.userId! != item.userId>
                   <a href="#"
-                     onclick="if(confirm('确认要踢出吗？')){location.href='/league/quit/${item.leagueId}?userId${item.userId}'}"
+                     onclick="if(confirm('确认要踢出吗？')){location.href='/league/quit/${item.leagueId}?userId=${item.userId}'}"
                      class="ui mini red basic button">踢出</a>
                 </#if>
                 <#if item.userId == leagueUser.userId!>
