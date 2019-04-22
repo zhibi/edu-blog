@@ -20,15 +20,12 @@
 
     <div class="ui attached segment m-padded-tb-large">
       <#list leagueList as item>
-        <a data-val="${item.id}" href="#" class="ui basic left pointing large label m-margin-tb-tiny league-item">
+        <a data-val="${item.id}" href="/league/detail/${item.id}" class="ui basic left pointing large label m-margin-tb-tiny league-item">
           <span>${item.name}</span>
           <div class="detail">${item.userNum}</div>
         </a>
       </#list>
-      <form action="/league/apply" method="post" onsubmit="return apply()">
-        <input type="hidden" name="leagueId" id="leagueId">
-        <button type="submit" class="ui teal button">申请加入</button>
-      </form>
+
     </div>
 
   </div>
@@ -39,19 +36,7 @@
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
-    $(".league-item").click(function () {
-        $(".league-item").removeClass("teal");
-        $(this).addClass("teal");
-        $("#leagueId").val($(this).data("val"));
-    });
 
-    function apply() {
-        if ($("#leagueId").val() < 1) {
-            alert("请先选择社团");
-            return false;
-        }
-        return true;
-    }
 </script>
 </body>
 </html>

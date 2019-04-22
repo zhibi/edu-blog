@@ -8,4 +8,10 @@
         <include refid="BaseMapper.Example_Where_Clause"/>
         <include refid="BaseMapper.Order_Sql_Clause"/>
     </select>
+    <select id="selectDtoByLeague" resultType="edu.blog.dto.BlogDTO">
+        select b.*,u.name userName,u.icon userIcon from blog b
+        left join user u on u.id = b.user_id
+        left join league_user lu on lu.user_id = b.user_id
+        where lu.league_id = #{leagueId}
+    </select>
 </mapper>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "../common/head.html"/>
+
+<body>
+<#assign menuAct="1"/>
+<!--导航-->
+<#include "../common/menu.html"/>
+
+<!--中间内容-->
+<div class="m-container m-padded-tb-big animated fadeIn">
+  <div class="ui container">
+    <div class="ui stackable grid">
+      <!--左边博客列表-->
+      <div class="eleven wide column">
+        <!--header-->
+        <div class="ui top attached segment">
+          <div class="ui middle aligned two column grid">
+            <div class="column">
+              <h3 class="ui teal header">社团介绍</h3>
+            </div>
+          </div>
+        </div>
+
+        <!--content-->
+        <div class="ui attached  segment">
+          ${league.content!}
+        </div>
+      </div>
+
+      <!--右边的top-->
+      <div class="five wide column">
+
+        <div class="ui segments">
+          <div class="ui secondary segment">
+            <div class="ui two column grid">
+              <div class="column">
+                <i class="idea icon"></i>社团信息
+              </div>
+            </div>
+          </div>
+          <div class="ui teal segment">
+            <div class="ui fluid vertical menu">
+              <div class="ui card centered">
+                <div class="image">
+                  <img src="${league.icon!}">
+                </div>
+                <div class="content">
+                  <a class="header">${league.name}</a>
+                  <div class="meta">
+                    <span class="date">${league.createTime?string("yyyy-MM-dd")}</span>
+                  </div>
+                  <div class="description">
+                    ${league.slogan!}
+                  </div>
+                </div>
+                <div class="extra content">
+                  <a>
+                    <i class="envelope icon"></i>
+                    ${league.contact!}
+                  </a>
+                </div>
+                <div class="ui bottom attached button">
+                  <#if leagueUser??>
+                    <a onclick="if(confirm('确认要退出吗？')){location.href='/league/quit/${league.id}'}" >退出社团</a>
+                  <#else>
+                    <form action="/league/apply" method="post">
+                      <input type="hidden" name="leagueId" id="leagueId">
+                      <button type="submit" class="ui teal button">申请加入</button>
+                    </form>
+                  </#if>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="eleven wide column">
+        <!--header-->
+        <div class="ui top attached segment">
+          <div class="ui middle aligned two column grid">
+            <div class="column">
+              <h3 class="ui teal header">社团的博客</h3>
+            </div>
+            <div class="right aligned column">
+              共 <h2 class="ui orange header m-inline-block m-text-thin"> ${blogDTOList?size} </h2> 篇
+            </div>
+          </div>
+        </div>
+
+        <!--content-->
+        <div class="ui attached  segment">
+          <#list blogDTOList as item>
+            <@blogItem item=item/>
+          </#list>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--底部footer-->
+<#include "../common/footer.html"/>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+</script>
+</body>
+</html>

@@ -6,7 +6,9 @@ import edu.blog.core.mybatis.condition.MybatisCondition;
 import edu.blog.domain.League;
 import edu.blog.domain.LeagueProp;
 import edu.blog.domain.LeagueUser;
+import edu.blog.dto.BlogDTO;
 import edu.blog.dto.LeagueUserDTO;
+import edu.blog.mapper.BlogMapper;
 import edu.blog.mapper.LeagueMapper;
 import edu.blog.mapper.LeaguePropMapper;
 import edu.blog.mapper.LeagueUserMapper;
@@ -41,6 +43,8 @@ public class LeagueController extends BaseController {
     private LeaguePropMapper leaguePropMapper;
     @Autowired
     private LeagueService    leagueService;
+    @Autowired
+    private BlogMapper       blogMapper;
 
     /**
      * 社团列表
@@ -88,6 +92,21 @@ public class LeagueController extends BaseController {
             model.addAttribute("leaguePropList", leaguePropList);
         }
         return "league/my-list";
+    }
+
+    @GetMapping("detail/{id}")
+    public String detail(@PathVariable Integer id, Model model) {
+        League league = leagueMapper.selectByPrimaryKey(id);
+        // 社团的博客
+        List<BlogDTO> blogDTOList = blogMapper.selectDtoByLeague(id);
+        model.addAttribute(league);
+        model.addAttribute("blogDTOList",blogDTOList);
+        // 判断是否已经加入
+        if(sessionUser() != null){
+            LeagueUser leagueUser = leagueUserMapper.selectOne(new LeagueUser().setUserId(sessionUser().getId()).setLeagueId(id));
+            model.addAttribute(leagueUser);
+        }
+        return "league/detail";
     }
 
     /**

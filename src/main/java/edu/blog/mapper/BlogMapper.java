@@ -22,4 +22,11 @@ public interface BlogMapper extends Mapper<Blog> {
      * @return
      */
     List<BlogDTO> selectDto(MybatisCondition condition);
+
+    /**
+     * 社团的博客
+     * @param leagueId
+     * @return
+     */
+    List<BlogDTO> selectDtoByLeague(Integer leagueId);
 }
