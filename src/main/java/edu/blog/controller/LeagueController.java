@@ -107,7 +107,7 @@ public class LeagueController extends BaseController {
         // 判断是否已经加入
         if (sessionUser() != null) {
             LeagueUser leagueUser = leagueUserMapper.selectOne(new LeagueUser().setUserId(sessionUser().getId()).setLeagueId(id));
-            model.addAttribute(leagueUser);
+            model.addAttribute("leagueUser", leagueUser);
         }
         return "league/detail";
     }

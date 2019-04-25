@@ -60,7 +60,7 @@ public class BlogServiceImpl extends BaseServiceImpl<BlogMapper, Blog> implement
         Blog blog = blogMapper.selectByPrimaryKey(id);
         if (null != blog) {
             Tag tag = tagMapper.selectOne(new Tag().setName(blog.getTag()));
-            if (tag != null) {
+            if (tag != null && tag.getBlogNum() > 0) {
                 tag.setBlogNum(tag.getBlogNum() - 1);
                 tagMapper.updateByPrimaryKeySelective(tag);
             }

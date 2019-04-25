@@ -3,6 +3,7 @@ package edu.blog.domain;
 import edu.blog.core.base.dto.BaseDomain;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Table;
 
 /**
@@ -22,6 +23,7 @@ public class Blog extends BaseDomain {
     /**
      * 内容
      */
+    @Column(columnDefinition = "text")
     private String content;
     /**
      * 标签
